@@ -32,7 +32,6 @@ export const Form = styled.View`
 
   padding: 16px;
   justify-content: space-between;
-  border: 1px solid red;
 `;
 
 export const ButtonGroup = styled.View`

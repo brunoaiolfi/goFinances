@@ -1,26 +1,36 @@
 import { Text, View } from "react-native";
-import { CardContainer, Footer, FooterText, Header, Price, Title } from "./styles";
+import { Movimentation } from "../../../types/interfaces/movimentation";
+import {
+  CardContainer,
+  Footer,
+  FooterText,
+  Header,
+  Price,
+  Title,
+} from "./styles";
 
-export interface CardAcitiviesProps {
-  id: number;
-  type: "Entrada" | "Saída";
-  price: number;
-  title: string;
-  categoryName: string;
-  data: Date;
-}
-
-export function CardActivie({ data, categoryName, price, title, type }: CardAcitiviesProps) {
+export function CardActivie({
+  date,
+  category,
+  value,
+  name,
+  activity,
+}: Movimentation) {
   return (
     <CardContainer>
       <Header>
-        <Title>{title}</Title>
-        <Price type={type}>R$ {price.toString()}</Price>
+        <Title>{name}</Title>
+        <Price type={activity}>R$ {value.toString()}</Price>
       </Header>
 
       <Footer>
-        <FooterText>{categoryName}</FooterText>
-        <FooterText>{data.getDate()}/{data.getMonth()}/{data.getFullYear()}</FooterText>
+        <View>
+          <FooterText>{category.name}</FooterText>
+        </View>
+        <FooterText>
+          {new Date(date).getDate()}/{new Date(date).getMonth()}/
+          {new Date(date).getFullYear()}
+        </FooterText>
       </Footer>
     </CardContainer>
   );

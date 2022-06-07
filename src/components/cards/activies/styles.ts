@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
 interface CardPropType {
-  type: "Entrada" | "Saída";
+  type: "in" | "out";
 }
 
 export const CardContainer = styled.View`
@@ -28,13 +28,13 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 14px;
+  font-size: 18px;
 `;
 
 export const Price = styled.Text<CardPropType>`
-  font-size: 20px;
+  font-size: 16px;
   color: ${({ theme, type }) =>
-    type === "Entrada" ? theme.colors.success : theme.colors.attention};
+    type === "in" ? theme.colors.success : theme.colors.attention};
 `;
 
 export const Footer = styled.View`

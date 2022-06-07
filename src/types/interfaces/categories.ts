@@ -4,8 +4,3 @@ export interface Category {
     icon: string,
     color: string,
 }
-
-export interface CategorySelected {
-    key: string,
-    name: string
-}

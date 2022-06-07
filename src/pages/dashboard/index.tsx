@@ -1,8 +1,11 @@
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useLayoutEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, Text, View } from "react-native";
-import { CardAcitiviesProps, CardActivie } from "../../components/cards/activies";
+import { CardActivie } from "../../components/cards/activies";
 import { CardProps, CardsHighLight } from "../../components/cards/highlight";
 import { Header } from "../../components/header";
+import { Movimentation } from "../../types/interfaces/movimentation";
+import { dataKeyTransactions } from "../../utils/dataKeyTransactions";
 import {
   DashboardContainer,
   ListActiviesContainer,
@@ -44,88 +47,19 @@ export function Dashboard() {
     },
   ];
 
-  const activies: CardAcitiviesProps[] = [
-    {
-      id: 1,
-      type: "Entrada",
-      price: 10000,
-      title: "Salário do pai",
-      categoryName: "Salário",
-      data: new Date(),
-    },
-    {
-      id: 2,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 3,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 4,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 5,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 11,
-      type: "Entrada",
-      price: 10000,
-      title: "Salário do pai",
-      categoryName: "Salário",
-      data: new Date(),
-    },
-    {
-      id: 12,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 13,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 14,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-    {
-      id: 15,
-      type: "Saída",
-      price: 10000,
-      title: "Lazer",
-      categoryName: "Lazer",
-      data: new Date(),
-    },
-  ];
+  const [activies, setActivies] = useState<Movimentation[]>([]);
+
+  useLayoutEffect(()=>{
+    getMovimentations()
+  },[])
+
+  async function getMovimentations(){
+    const data = await AsyncStorage.getItem(dataKeyTransactions);
+
+    const transactions = data ? JSON.parse(data) : []
+    setActivies(transactions)
+
+  } 
 
   return (
     <DashboardContainer>
@@ -159,11 +93,11 @@ export function Dashboard() {
           renderItem={({ item }) => (
             <CardActivie
               id={item.id}
-              categoryName={item.categoryName}
-              price={item.price}
-              data={item.data}
-              title={item.title}
-              type={item.type}
+              category={item.category}
+              value={item.value}
+              date={item.date}
+              name={item.name}
+              activity={item.activity}
             />
           )}
         />
