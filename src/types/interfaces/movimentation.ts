@@ -4,7 +4,7 @@ export interface Movimentation {
   id: string;
   name: string;
   value: number;
-  category: Category;
+  categoryKey: string;
   activity: "in" | "out";
   date: Date;
 }

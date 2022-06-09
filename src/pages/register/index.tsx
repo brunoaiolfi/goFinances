@@ -82,7 +82,7 @@ export function Register() {
       name,
       value,
       activity: optionSelected,
-      category: categorySelected,
+      categoryKey: categorySelected.key,
       date: new Date(),
     };
 

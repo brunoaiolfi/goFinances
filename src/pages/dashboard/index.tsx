@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useLayoutEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, Text, View } from "react-native";
 import { CardActivie } from "../../components/cards/activies";
 import { CardProps, CardsHighLight } from "../../components/cards/highlight";
@@ -49,17 +50,21 @@ export function Dashboard() {
 
   const [activies, setActivies] = useState<Movimentation[]>([]);
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     getMovimentations()
-  },[])
+  }, [])
 
-  async function getMovimentations(){
+  useFocusEffect(
+    useCallback(() => { getMovimentations() }, [])
+  )
+
+  async function getMovimentations() {
     const data = await AsyncStorage.getItem(dataKeyTransactions);
 
     const transactions = data ? JSON.parse(data) : []
-    setActivies(transactions)
 
-  } 
+    setActivies(transactions);
+  }
 
   return (
     <DashboardContainer>
@@ -93,11 +98,12 @@ export function Dashboard() {
           renderItem={({ item }) => (
             <CardActivie
               id={item.id}
-              category={item.category}
+              categoryKey={item.categoryKey}
               value={item.value}
               date={item.date}
               name={item.name}
               activity={item.activity}
+
             />
           )}
         />

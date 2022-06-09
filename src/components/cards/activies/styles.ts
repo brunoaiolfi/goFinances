@@ -43,6 +43,17 @@ export const Footer = styled.View`
   justify-content: space-between;
 `;
 
+export const FooterTextContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const IconCategory = styled(Feather)`
+  color: ${({ theme }) => theme.colors.text};
+  margin-right: 8px;
+`;
+
 export const FooterText = styled.Text`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.text};

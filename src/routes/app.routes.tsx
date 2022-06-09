@@ -16,7 +16,6 @@ export default function AppRoutes() {
   return (
     <Navigator
       screenOptions={{
-        unmountOnBlur: true,
         headerShown: false,
         tabBarActiveTintColor: theme.colors.secondary,
         tabBarInactiveTintColor: theme.colors.text,
