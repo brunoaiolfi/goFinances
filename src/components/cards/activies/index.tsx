@@ -27,7 +27,7 @@ export function CardActivie({
     <CardContainer>
       <Header>
         <Title>{name}</Title>
-        <Price type={activity}>{activity === 'out' && '- '}R$ {Number(value).toLocaleString('pt-BR', {
+        <Price type={activity}>{activity === 'out' && '- '} {Number(value).toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         })}</Price>

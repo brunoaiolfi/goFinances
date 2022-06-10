@@ -24,29 +24,10 @@ export function Dashboard() {
     image: "https://avatars.githubusercontent.com/u/64096262?v=4",
   };
 
-  const data: Cards[] = [
-    {
-      id: 1,
-      amount: 12000,
-      data: "13 de abril de 2021",
-      icon: "arrow-up-circle",
-      type: "Entrada",
-    },
-    {
-      id: 2,
-      amount: 120,
-      data: "13 de abril de 2021",
-      icon: "arrow-down-circle",
-      type: "Saída",
-    },
-    {
-      id: 3,
-      amount: 17000,
-      data: "13 de abril de 2021",
-      icon: "dollar-sign",
-      type: "Total",
-    },
-  ];
+  const [highLightCardData, setHighLightCardData] = useState<Cards[]>([])
+
+
+
 
   const [activies, setActivies] = useState<Movimentation[]>([]);
 
@@ -61,9 +42,49 @@ export function Dashboard() {
   async function getMovimentations() {
     const data = await AsyncStorage.getItem(dataKeyTransactions);
 
+    let entriesSum = 0;
+    let expensive = 0;
+
     const transactions = data ? JSON.parse(data) : []
 
+    transactions.map(({ activity, value }: Movimentation) => {
+      if (activity === 'in') {
+        entriesSum += value;
+      }
+      else {
+        expensive += value;
+      }
+    })
+
     setActivies(transactions);
+
+    setHighLightCardData(
+      [
+        {
+          id: 1,
+          amount: entriesSum,
+          data: "13 de abril de 2021",
+          icon: "arrow-up-circle",
+          type: "Entrada",
+        },
+        {
+          id: 2,
+          amount: expensive,
+          data: "13 de abril de 2021",
+          icon: "arrow-down-circle",
+          type: "Saída",
+        },
+        {
+          id: 3,
+          amount: entriesSum - expensive,
+          data: "13 de abril de 2021",
+          icon: "dollar-sign",
+          type: "Total",
+        },
+      ]
+    )
+
+
   }
 
   return (
@@ -72,7 +93,7 @@ export function Dashboard() {
 
       <ListHighLightedContainer>
         <FlatList
-          data={data}
+          data={highLightCardData}
           keyExtractor={(item) => String(item.id)}
           horizontal
           showsHorizontalScrollIndicator={false}

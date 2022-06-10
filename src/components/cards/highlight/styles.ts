@@ -33,7 +33,7 @@ export const TypeIcon = styled(Feather)<CardPropType>`
   color: ${({ theme, type }) =>
     type === "Total"
       ? theme.colors.shape
-      : type === "in"
+      : type === "Entrada"
       ? theme.colors.success
       : theme.colors.attention};
 `;

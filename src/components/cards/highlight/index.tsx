@@ -24,7 +24,14 @@ export function CardsHighLight({ amount, data, icon, type }: CardProps) {
       </Header>
 
       <View>
-        <Amount type={type}>R$ {amount}</Amount>
+        <Amount type={type}>
+          {
+            amount.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            })
+          }
+        </Amount>
         <LastActivy type={type}>Última atividade {data}.</LastActivy>
       </View>
     </CardContainer>
