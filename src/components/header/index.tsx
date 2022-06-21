@@ -11,12 +11,12 @@ import {
   UserName,
 } from "./styles";
 
-interface headerProps {
-  name: string;
-  image: string;
-}
+export function Header() {
+  const headerProps = {
+    name: "Bruno S.",
+    image: "https://avatars.githubusercontent.com/u/64096262?v=4",
+  };
 
-export function Header(headerProps: headerProps) {
   return (
     <HeaderContainer>
       <UserContainer>

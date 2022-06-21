@@ -31,3 +31,10 @@ export const ListTitle = styled.Text`
   font-size: 20px;
   margin-bottom: 16px;
 `;
+
+export const LoadContainer = styled.View`
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
+`;

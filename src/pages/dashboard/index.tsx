@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useLayoutEffect, useState } from "react";
-import { FlatList, Image, SafeAreaView, Text, View } from "react-native";
+import { ActivityIndicator, ActivityIndicatorBase, FlatList, Image, SafeAreaView, Text, View } from "react-native";
+import { useTheme } from "styled-components";
 import { CardActivie } from "../../components/cards/activies";
 import { CardProps, CardsHighLight } from "../../components/cards/highlight";
 import { Header } from "../../components/header";
@@ -12,24 +13,23 @@ import {
   ListActiviesContainer,
   ListHighLightedContainer,
   ListTitle,
+  LoadContainer,
 } from "./styles";
+
+require('intl');
+require('intl/locale-data/jsonp/pt-BR');
 
 export interface Cards extends CardProps {
   id: number;
 }
 
 export function Dashboard() {
-  const headerProps = {
-    name: "Bruno S.",
-    image: "https://avatars.githubusercontent.com/u/64096262?v=4",
-  };
 
+  const [isLoading, setIsLoading] = useState(true);
   const [highLightCardData, setHighLightCardData] = useState<Cards[]>([])
-
-
-
-
   const [activies, setActivies] = useState<Movimentation[]>([]);
+
+  const theme = useTheme()
 
   useLayoutEffect(() => {
     getMovimentations()
@@ -45,7 +45,7 @@ export function Dashboard() {
     let entriesSum = 0;
     let expensive = 0;
 
-    const transactions = data ? JSON.parse(data) : []
+    const transactions: Movimentation[] = data ? JSON.parse(data) : []
 
     transactions.map(({ activity, value }: Movimentation) => {
       if (activity === 'in') {
@@ -56,21 +56,49 @@ export function Dashboard() {
       }
     })
 
-    setActivies(transactions);
+    const lastTransactionEntries =
+      new Date(Math.max.apply(Math,
+        transactions
+          .filter((transaction) => transaction.activity === 'in')
+          .map((transaction) => new Date(transaction.date).getTime())
+      ))
+
+    const lastTransactionExpensive =
+      new Date(Math.max.apply(Math,
+        transactions
+          .filter((transaction) => transaction.activity === 'in')
+          .map((transaction) => new Date(transaction.date).getTime())
+      ))
+
+    const formattedLastTransactionEntries =
+      lastTransactionEntries.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+      });
+
+    const formattedLastTransactionExpensive =
+      lastTransactionExpensive.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+      });
+
+    setActivies(transactions)
 
     setHighLightCardData(
       [
         {
           id: 1,
           amount: entriesSum,
-          data: "13 de abril de 2021",
+          data: formattedLastTransactionExpensive,
           icon: "arrow-up-circle",
           type: "Entrada",
         },
         {
           id: 2,
           amount: expensive,
-          data: "13 de abril de 2021",
+          data: formattedLastTransactionEntries,
           icon: "arrow-down-circle",
           type: "Saída",
         },
@@ -84,51 +112,58 @@ export function Dashboard() {
       ]
     )
 
+    setIsLoading(false)
 
   }
 
   return (
-    <DashboardContainer>
-      <Header image={headerProps.image} name={headerProps.name} />
 
-      <ListHighLightedContainer>
-        <FlatList
-          data={highLightCardData}
-          keyExtractor={(item) => String(item.id)}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <CardsHighLight
-              amount={item.amount}
-              data={item.data}
-              icon={item.icon}
-              type={item.type}
-            />
-          )}
-        />
-      </ListHighLightedContainer>
+    isLoading ?
+      <LoadContainer>
+        <ActivityIndicator color={theme.colors.primary} size="large" />
+      </LoadContainer >
+      :
+      <DashboardContainer>
+        <Header />
+        <ListHighLightedContainer>
+          <FlatList
+            data={highLightCardData}
+            keyExtractor={(item) => String(item.id)}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <CardsHighLight
+                amount={item.amount}
+                data={item.data}
+                icon={item.icon}
+                type={item.type}
+              />
+            )}
+          />
+        </ListHighLightedContainer>
 
-      <ListActiviesContainer>
-        <ListTitle>Listagem</ListTitle>
-        <FlatList
-          style={{
-            width: "100%",
-          }}
-          data={activies}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <CardActivie
-              id={item.id}
-              categoryKey={item.categoryKey}
-              value={item.value}
-              date={item.date}
-              name={item.name}
-              activity={item.activity}
+        <ListActiviesContainer>
+          <ListTitle>Listagem</ListTitle>
+          <FlatList
+            style={{
+              width: "100%",
+            }}
+            data={activies}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <CardActivie
+                id={item.id}
+                categoryKey={item.categoryKey}
+                value={item.value}
+                date={item.date}
+                name={item.name}
+                activity={item.activity}
 
-            />
-          )}
-        />
-      </ListActiviesContainer>
-    </DashboardContainer>
+              />
+            )}
+          />
+        </ListActiviesContainer>
+      </DashboardContainer>
+
   );
 }

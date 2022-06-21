@@ -9,6 +9,7 @@ import { Dashboard } from "../pages/dashboard";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Register } from "../pages/register";
+import { Resume } from "../pages/resume";
 
 export default function AppRoutes() {
   const theme = useTheme();
@@ -51,7 +52,7 @@ export default function AppRoutes() {
             <MaterialIcons name="pie-chart" size={size} color={color} />
           ),
         }}
-        component={Dashboard}
+        component={Resume}
       />
     </Navigator>
   );

@@ -6,5 +6,5 @@ GoFinances é um app simples de financias, onde você pode ter o controle da ent
 <br/>
 
 <h2>Créditos</h2>
-<p> Projeto desenvolvido durante as aulas do curso ignite de react native da rocketseat. </p>
-
+<p> Projeto desenvolvido durante as aulas do curso ignite de react native da rocketseat </p>
+<p> Prototipação feita por Tiago Luchtenberg @tiagoluchtenberg </p>
