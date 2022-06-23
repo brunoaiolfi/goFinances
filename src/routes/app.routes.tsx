@@ -10,6 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Register } from "../pages/register";
 import { Resume } from "../pages/resume";
+import { Login } from "../pages/login";
 
 export default function AppRoutes() {
   const theme = useTheme();

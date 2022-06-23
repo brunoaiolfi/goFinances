@@ -89,6 +89,13 @@ export function Dashboard() {
     setHighLightCardData(
       [
         {
+          id: 3,
+          amount: entriesSum - expensive,
+          data: "13 de abril de 2021",
+          icon: "dollar-sign",
+          type: "Total",
+        },
+        {
           id: 1,
           amount: entriesSum,
           data: formattedLastTransactionExpensive,
@@ -102,13 +109,7 @@ export function Dashboard() {
           icon: "arrow-down-circle",
           type: "Saída",
         },
-        {
-          id: 3,
-          amount: entriesSum - expensive,
-          data: "13 de abril de 2021",
-          icon: "dollar-sign",
-          type: "Total",
-        },
+
       ]
     )
 

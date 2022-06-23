@@ -44,8 +44,8 @@ export const MonthSelect = styled.View`
 `;
 
 export const MonthSelectButton = styled.TouchableOpacity`
-  width: 32;
-  height: 24;
+  width: 32px;
+  height: 24px;
 `;
 export const SelectIcon = styled(Feather)`
   font-size: 24;

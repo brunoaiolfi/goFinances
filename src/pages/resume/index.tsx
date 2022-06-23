@@ -4,13 +4,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { addMonths, format, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { FlatList, Text, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, useWindowDimensions, View } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { CardHistory } from '../../components/cards/history';
+import theme from '../../global/styles/theme';
 import { Category } from '../../types/interfaces/categories';
 import { Movimentation } from '../../types/interfaces/movimentation';
 import { categories } from '../../utils/categories';
 import { dataKeyTransactions } from '../../utils/dataKeyTransactions';
+import { LoadContainer } from '../dashboard/styles';
 import { ChartContainer, Container, Content, Header, Month, MonthSelect, MonthSelectButton, SelectIcon, TitlePage } from './styles';
 
 
@@ -28,7 +30,7 @@ export function Resume() {
     const deviceHeight = useWindowDimensions().height;
 
     const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([])
-
+    const [isLoading, setIsLoading] = useState(false)
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     useFocusEffect(
@@ -36,7 +38,8 @@ export function Resume() {
     )
 
     useEffect(() => {
-        loadingData()
+        setIsLoading(true)
+        loadingData().finally(() => setIsLoading(false))
     }, [selectedDate])
 
     function handleDateChange(action: 'next' | 'prev') {
@@ -104,48 +107,57 @@ export function Resume() {
                     paddingBottom: useBottomTabBarHeight()
                 }}>
 
-                <MonthSelect>
-                    <MonthSelectButton onPress={() => handleDateChange('prev')}>
-                        <SelectIcon name="chevron-left" />
-                    </MonthSelectButton>
+                {
+                    isLoading ?
+                        <LoadContainer>
+                            <ActivityIndicator color={theme.colors.primary} size="large" />
+                        </LoadContainer > :
+                        <>
+                            <MonthSelect>
 
-                    <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
+                                <MonthSelectButton onPress={() => handleDateChange('prev')}>
+                                    <SelectIcon name="chevron-left" />
+                                </MonthSelectButton>
 
-                    <MonthSelectButton onPress={() => handleDateChange('next')}>
-                        <SelectIcon name="chevron-right" />
-                    </MonthSelectButton>
-                </MonthSelect>
+                                <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
 
-                <ChartContainer>
-                    <VictoryPie
-                        data={totalByCategories}
-                        x='percent'
-                        y='total'
-                        width={deviceWidth}
-                        height={deviceHeight * 0.425}
-                        colorScale={totalByCategories.map(category => category.color)}
-                        style={{
-                            labels: {
-                                fontSize: 14,
-                                fontWeight: 'bold',
-                                fill: '#ffff'
-                            }
-                        }}
-                        labelRadius={50}
-                    />
-                </ChartContainer>
+                                <MonthSelectButton onPress={() => handleDateChange('next')}>
+                                    <SelectIcon name="chevron-right" />
+                                </MonthSelectButton>
+                            </MonthSelect>
 
-                <FlatList
-                    style={{
-                        width: "100%",
-                        marginBottom: 60
-                    }}
-                    data={totalByCategories}
-                    keyExtractor={(item) => String(item.key)}
-                    renderItem={({ item }) => (
-                        <CardHistory amount={item.totalFormatted} color={item.color} title={item.name} />
-                    )}
-                />
+                            <ChartContainer>
+                                <VictoryPie
+                                    data={totalByCategories}
+                                    x='percent'
+                                    y='total'
+                                    width={deviceWidth}
+                                    height={deviceHeight * 0.425}
+                                    colorScale={totalByCategories.map(category => category.color)}
+                                    style={{
+                                        labels: {
+                                            fontSize: 14,
+                                            fontWeight: 'bold',
+                                            fill: '#ffff'
+                                        }
+                                    }}
+                                    labelRadius={50}
+                                />
+                            </ChartContainer>
+
+                            <FlatList
+                                style={{
+                                    width: "100%",
+                                    marginBottom: 60
+                                }}
+                                data={totalByCategories}
+                                keyExtractor={(item) => String(item.key)}
+                                renderItem={({ item }) => (
+                                    <CardHistory amount={item.totalFormatted} color={item.color} title={item.name} />
+                                )}
+                            />
+                        </>
+                }
             </Content>
 
         </Container>

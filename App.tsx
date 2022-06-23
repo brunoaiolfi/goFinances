@@ -6,6 +6,8 @@ import { Dashboard } from "./src/pages/dashboard";
 import AppRoutes from "./src/routes/app.routes";
 import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Login } from "./src/pages/login";
 
 
 export default function App() {
@@ -18,9 +20,11 @@ export default function App() {
   return (
 
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
+      <StatusBar style="light"/>
+      {/* <NavigationContainer>
         <AppRoutes />
-      </NavigationContainer>
+      </NavigationContainer> */}
+      <Login></Login>
     </ThemeProvider>
   );
 }
