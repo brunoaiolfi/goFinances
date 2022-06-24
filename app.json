@@ -1,5 +1,6 @@
 {
   "expo": {
+    "schema": "goFinances",
     "name": "goFinances",
     "slug": "goFinances",
     "version": "1.0.0",

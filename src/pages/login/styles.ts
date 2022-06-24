@@ -13,6 +13,8 @@ export const Header = styled.View`
   background-color: ${({ theme }) => theme.colors.primary};
 
   justify-content: flex-end;
+
+  padding: 56px 0px;
 `;
 export const TitleWrapper = styled.View`
   width: 100%;
@@ -47,5 +49,12 @@ export const Footer = styled.View`
 
   background-color: ${({ theme }) => theme.colors.secondary};
 
-  justify-content: center;
+`;
+export const FooterWrapper = styled.View`
+  margin-top: -29px;
+
+  padding: 0px 32px;
+
+  display: flex;
+  
 `;

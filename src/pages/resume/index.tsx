@@ -119,7 +119,11 @@ export function Resume() {
                                     <SelectIcon name="chevron-left" />
                                 </MonthSelectButton>
 
-                                <Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</Month>
+                                <Month>
+                                    {
+                                        format(selectedDate, 'MMMM, yyyy', { locale: ptBR })
+                                    }
+                                </Month>
 
                                 <MonthSelectButton onPress={() => handleDateChange('next')}>
                                     <SelectIcon name="chevron-right" />
