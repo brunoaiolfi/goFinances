@@ -1,5 +1,11 @@
-# goFinances
+<h1 align="center">
+goFinances 💸
+</h1>
+<p align="center">
 GoFinances é um app simples de financias, onde você pode ter o controle da entrada e saída do seu dinheiro.
+</p>
+<br/>
+
 
 <h2>Tecnologias utilizadas: </h2>
 <ul>
