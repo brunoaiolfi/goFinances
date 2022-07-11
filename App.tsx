@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Login } from "./src/pages/login";
+import { AuthProvider } from "./src/contexts/AuthContext";
 
 
 export default function App() {
@@ -20,11 +21,19 @@ export default function App() {
   return (
 
     <ThemeProvider theme={theme}>
-      <StatusBar style="light" />
-      {/* <NavigationContainer>
-        <AppRoutes />
-      </NavigationContainer> */}
-      <Login></Login>
+      <AuthProvider>
+        <StatusBar style="light" />
+
+        {/*
+        Por hora não vamos usar o login
+        <Login /> 
+        */}
+        
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
+
+      </AuthProvider>
     </ThemeProvider>
   );
 }
