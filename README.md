@@ -12,7 +12,7 @@ GoFinances é um app simples de financias, onde você pode ter o controle da ent
   <li> React-native </li>
   <li> TypeScript </li>
   <li> Expo </li>
-  <li> Apex-charts, para gráficos </li>
+  <li> Victory-Charts, para gráficos </li>
 </ul>
 
 <h2>Como utilizar: </h2>
