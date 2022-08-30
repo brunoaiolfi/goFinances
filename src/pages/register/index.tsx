@@ -99,7 +99,7 @@ export function Register() {
 
       setCategorySelected(undefined);
       setOptionSelected(undefined);
-      reset();
+      reset({});
 
       navigation.navigate("Listagem");
     } catch (error) {

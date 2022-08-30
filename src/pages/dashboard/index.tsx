@@ -5,11 +5,11 @@ import { ActivityIndicator, ActivityIndicatorBase, FlatList, Image, SafeAreaView
 import { useTheme } from "styled-components";
 import { CardActivie } from "../../components/cards/activies";
 import { CardProps, CardsHighLight } from "../../components/cards/highlight";
-import { Header } from "../../components/header";
 import { Movimentation } from "../../types/interfaces/movimentation";
 import { dataKeyTransactions } from "../../utils/dataKeyTransactions";
 import {
   DashboardContainer,
+  Header,
   ListActiviesContainer,
   ListHighLightedContainer,
   ListTitle,
@@ -84,6 +84,8 @@ export function Dashboard() {
         year: '2-digit'
       });
 
+    const formattedLastTransaction = formattedLastTransactionExpensive > formattedLastTransactionEntries ? formattedLastTransactionExpensive : formattedLastTransactionEntries
+
     setActivies(transactions)
 
     setHighLightCardData(
@@ -91,21 +93,21 @@ export function Dashboard() {
         {
           id: 3,
           amount: entriesSum - expensive,
-          data: "13 de abril de 2021",
+          data: formattedLastTransaction ?? '',
           icon: "dollar-sign",
           type: "Total",
         },
         {
           id: 1,
           amount: entriesSum,
-          data: formattedLastTransactionExpensive,
+          data: formattedLastTransactionExpensive ?? '',
           icon: "arrow-up-circle",
           type: "Entrada",
         },
         {
           id: 2,
           amount: expensive,
-          data: formattedLastTransactionEntries,
+          data: formattedLastTransactionEntries ?? '',
           icon: "arrow-down-circle",
           type: "Saída",
         },
@@ -125,6 +127,7 @@ export function Dashboard() {
       </LoadContainer >
       :
       <DashboardContainer>
+
         <Header />
         <ListHighLightedContainer>
           <FlatList
@@ -148,6 +151,7 @@ export function Dashboard() {
           <FlatList
             style={{
               width: "100%",
+              height: "100%",
             }}
             data={activies}
             keyExtractor={(item) => String(item.id)}

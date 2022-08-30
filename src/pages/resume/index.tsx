@@ -99,7 +99,7 @@ export function Resume() {
     return (
         <Container>
             <Header>
-                <TitlePage>Resumo</TitlePage>
+                <TitlePage>Resumo de gastos</TitlePage>
             </Header>
 
             <Content

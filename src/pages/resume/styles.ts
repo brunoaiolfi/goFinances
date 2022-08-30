@@ -48,11 +48,11 @@ export const MonthSelectButton = styled.TouchableOpacity`
   height: 24px;
 `;
 export const SelectIcon = styled(Feather)`
-  font-size: 24;
+  font-size: 24px;
 `;
 
 export const Month = styled.Text`
   color: ${({ theme }) => theme.colors.title};
-  font-size: 18;
+  font-size: 18px;
   font-weight: bold;
 `;

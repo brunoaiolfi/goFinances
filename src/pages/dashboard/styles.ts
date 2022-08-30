@@ -6,19 +6,33 @@ export const DashboardContainer = styled.View`
   background-color: ${(props) => props.theme.colors.background};
   width: 100%;
   height: 100%;
+  
+`;
+
+export const Header = styled.View`
+  width: 100%;
+  height: 132px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  background: ${({ theme }) => theme.colors.primary};
+
 `;
 
 export const ListActiviesContainer = styled.View`
   background-color: ${(props) => props.theme.colors.background};
- 
+
   width: 100%;
-  height: 100%;
+  height: 50%;
 
   display: flex;
 
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 380px;
 `;
 
 export const ListHighLightedContainer = styled.View`

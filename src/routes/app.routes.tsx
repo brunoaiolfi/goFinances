@@ -10,7 +10,6 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Register } from "../pages/register";
 import { Resume } from "../pages/resume";
-import { Login } from "../pages/login";
 
 export default function AppRoutes() {
   const theme = useTheme();
@@ -38,12 +37,14 @@ export default function AppRoutes() {
       />
 
       <Screen
+        
         name="Cadastrar"
         component={Register}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="attach-money" size={size} color={color} />
           ),
+          unmountOnBlur: true
         }}
       />
       <Screen
